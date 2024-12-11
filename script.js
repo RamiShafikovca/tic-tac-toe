@@ -21,20 +21,20 @@ const Gameboard = (() => {
         if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             return board[0][0];
         } if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-            return board[0][0];
+            return board[0][2];
         }
 
         for (let i = 0; i < board.length; i++) {
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-                return board[i][0];
-            } else if (board[0][i] == board[i][1] && board[i][1] == board[2][i]) {
+                return board[i][1];
+            } else if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
                 return board[0][i];
             }
             for (let j = 0; j < board.length; j++) {
                 if (board[i][j] == '_') tie = false;
             }
         }
-        return tie ? 'T' : tie;
+        return tie ? 'T' : '_';
     };
     const get = (row, col) => {
         return board[row][col];
@@ -55,8 +55,7 @@ const gameDOM = (() => {
             cell.addEventListener('click', () => {
                 Gameboard.placeMark(k, m);
                 gameDOM.draw();
-                Gameboard.print();
-                console.log(Gameboard.checkWin());
+                gameDOM.reset(Gameboard.checkWin());
             });
             grid.appendChild(cell);
         }
@@ -68,6 +67,23 @@ const gameDOM = (() => {
             }
         }
     };
-    return { draw };
+    const reset = (winState) => {
+        switch (winState) {
+            case 'X':
+                alert('X wins!');
+                break;
+            case 'O':
+                alert('O wins!');
+                break;
+            case 'T':
+                alert('It\'s a tie!');
+                break;
+        }
+        if (winState != '_') {
+            Gameboard.clear();
+            gameDOM.draw();
+        }
+    }
+    return { draw, reset };
 })();
 gameDOM.draw();
