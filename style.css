@@ -6,4 +6,6 @@
 
 p {
     border: blue 3px solid;
+    text-align: center;
+    line-height: 5em;
 }

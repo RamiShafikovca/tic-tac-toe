@@ -52,18 +52,20 @@ const gameDOM = (() => {
     for (let k = 0; k < 3; k++) {
         for (let m = 0; m < 3; m++) {
             const cell = document.createElement('div');
+            const text = document.createElement('p');
             cell.addEventListener('click', () => {
                 Gameboard.placeMark(k, m);
                 gameDOM.draw();
                 gameDOM.reset(Gameboard.checkWin());
             });
+            cell.appendChild(text);
             grid.appendChild(cell);
         }
     };
     const draw = () => {
         for (let n = 0; n < 3; n++) {
             for (let p = 0; p < 3; p++) {
-                grid.children[n*3+p].innerHTML = Gameboard.get(n, p);
+                grid.children[n*3+p].firstChild.innerHTML = Gameboard.get(n, p);
             }
         }
     };
